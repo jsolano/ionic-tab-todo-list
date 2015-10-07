@@ -1,0 +1,13 @@
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+
+    <input type="text" ng-model="todobiz.task" placeholder="Enter a new task..."> 
+    <button ng-click="addTask()">Add</button>
+    <ul> 
+      <li ng-repeat="task in tasks track by $index" ng-show="task != undefined"> 
+        {{task}} <button ng-click="removeTask($index)">Remove</button>
+      </li>
+    </ul>
+    
+  </ion-content>
+</ion-view>
