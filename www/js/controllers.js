@@ -97,15 +97,58 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('SettingsCtrl', function($scope, FriendService, $state) { 
+.controller('SettingsCtrl', function($scope, FriendService, $state, $ionicActionSheet, $timeout) { 
+  
   $scope.friendsCount = FriendService.all().length;
+
+  $scope.title = 'Settings';
 
   $scope.showFriends = function() {
     $state.go('tab.friends');
   }
+
+  // Triggered on a button click, or some other target
+   $scope.show = function() {
+
+     // Show the action sheet
+     var hideSheet = $ionicActionSheet.show({
+       buttons: [
+         { text: '<b>Share</b> This' },
+         { text: 'Move' }
+       ],
+       destructiveText: 'Delete',
+       titleText: 'Modify your album',
+       cancelText: 'Cancel',
+       cancel: function() {
+            hideSheet();
+          },
+       buttonClicked: function(index) {
+         hideSheet();
+         if (index === 0) {
+             alert('Share Clicked...');
+         } else if (index === 1) {
+            alert('Move Clicked...');
+         }
+         return true;
+       },
+       destructiveButtonClicked: function() {
+          hideSheet();
+          alert('Delete Clicked...');
+       }
+     });
+
+     // For example's sake, hide the sheet after two seconds
+     // $timeout(function() {
+     //   hideSheet();
+     // }, 2000);
+
+   };
+
 })
 
 .controller('FriendsCtrl', function($scope, FriendService) { 
+
+  $scope.title = 'Friends';
 
   $scope.friends = FriendService.all();
 
